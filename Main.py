@@ -153,7 +153,6 @@ K = np.array([
 ])
 E = K.T @ F @ K
 P1, P2 = ch.test(E, K, src, dst)
-print(P1.shape)
 
 # ---- 2D canvas ----
 fig2d, ax2d = plt.subplots()
