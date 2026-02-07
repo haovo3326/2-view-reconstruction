@@ -17,7 +17,7 @@ def _normalize3D(p):
 
 
 # ---------- 2D ----------
-def render_point2D(axe, point: np.ndarray, color):
+def render_point2D(axe, point: np.ndarray, color = (255, 0, 0)):
     point = _normalize2D(point)
 
     x = point[0, 0]
@@ -27,7 +27,7 @@ def render_point2D(axe, point: np.ndarray, color):
     axe.scatter(x, y, s=10, color=color)
 
 
-def render_line2D(axe, p1: np.ndarray, p2: np.ndarray, color):
+def render_line2D(axe, p1: np.ndarray, p2: np.ndarray, color = (255, 0, 0)):
     p1 = _normalize2D(p1)
     p2 = _normalize2D(p2)
 
@@ -39,7 +39,7 @@ def render_line2D(axe, p1: np.ndarray, p2: np.ndarray, color):
 
 
 # ---------- 3D ----------
-def render_point3D(axe, point: np.ndarray, color):
+def render_point3D(axe, point: np.ndarray, color = (255, 0, 0)):
     point = _normalize3D(point)
 
     x = point[0, 0]
@@ -47,10 +47,10 @@ def render_point3D(axe, point: np.ndarray, color):
     z = point[2, 0]
 
     color = np.array(color) / 255
-    axe.scatter(x, y, z, s=10, color=color)
+    axe.scatter(x, y, z, s=20, color=color)
 
 
-def render_line3D(axe, p1: np.ndarray, p2: np.ndarray, color):
+def render_line3D(axe, p1: np.ndarray, p2: np.ndarray, color = (255, 0, 0)):
     p1 = _normalize3D(p1)
     p2 = _normalize3D(p2)
 

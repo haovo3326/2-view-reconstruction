@@ -155,6 +155,7 @@ K = np.array([
 E = K.T @ F @ K
 P1, P2 = ch.test(E, K, src, dst)
 P2, X_3D_homogeneous = lmt.triangulate_and_LM(P1, P2, src, dst)
+X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12 = X_3D_homogeneous
 
 # ---- 2D canvas ----
 fig2d, ax2d = plt.subplots()
@@ -163,27 +164,41 @@ ax2d.set_xlim(-0, 10000)
 ax2d.set_ylim(5000, -8000)
 rd.render_image(ax2d, "Sample/Image 1.JPG")
 
-i1 = [12, 16, 20, 24, 28, 32] # right
-i2 = [32, 33, 34, 35, 45, 46, 47] # up
-i3 = [47, 44, 41, 38] # left
-for i in i1:
-    rd.render_line2D(ax2d, v_right, src[i], color = (255, 0, 0))
-for i in i2:
-    rd.render_line2D(ax2d, v_up, src[i], color = (255, 0, 0))
+# i1 = [12, 16, 20, 24, 28, 32] # right
+# i2 = [32, 33, 34, 35, 45, 46, 47] # up
+# i3 = [47, 44, 41, 38] # left
+# for i in i1:
+#     rd.render_line2D(ax2d, v_right, src[i], color = (255, 0, 0))
+# for i in i2:
+#     rd.render_line2D(ax2d, v_up, src[i], color = (255, 0, 0))
 # for i in i3:
 #     rd.render_line2D(ax2d, v_left, src[i], color = (255, 0, 0))
 
-rd.render_point2D(ax2d, v_up, color = (0, 255, 0))
-rd.render_point2D(ax2d, v_right, color = (0, 255, 0))
-rd.render_point2D(ax2d, v_left, color = (0, 255, 0))
-
+# rd.render_point2D(ax2d, v_up, color = (0, 255, 0))
+# rd.render_point2D(ax2d, v_right, color = (0, 255, 0))
+# rd.render_point2D(ax2d, v_left, color = (0, 255, 0))
+for X in X_3D_homogeneous:
+    projection = P1 @ X
+    rd.render_point2D(ax2d, projection)
+for i, x in enumerate(src):
+    if i <= 11: rd.render_point2D(ax2d, x, color = (0, 255, 0))
 
 
 # ---- 3D canvas ----
 fig3d = plt.figure()
 ax3d = fig3d.add_subplot(111, projection='3d')
 ax3d.set_title("3D Canvas")
+for X in X_3D_homogeneous:
+    rd.render_point3D(ax3d, X, color = (0, 255, 0))
 
+rd.render_line3D(ax3d, X1, X2)
+rd.render_line3D(ax3d, X2, X10)
+rd.render_line3D(ax3d, X10, X9)
+rd.render_line3D(ax3d, X9, X1)
+rd.render_line3D(ax3d, X3, X4)
+rd.render_line3D(ax3d, X4, X12)
+rd.render_line3D(ax3d, X12, X11)
+rd.render_line3D(ax3d, X11, X3)
 
 plt.show()
 
