@@ -4,6 +4,7 @@ import Renderer as rd
 import Utility as ut
 import VPCalculator as vp
 import Cheirality as ch
+import LMTriangulation as lmt
 
 A1s = [2277.20, 1024.74]
 A2s = [2684.00, 1165.05]
@@ -153,6 +154,7 @@ K = np.array([
 ])
 E = K.T @ F @ K
 P1, P2 = ch.test(E, K, src, dst)
+P2, X_3D_homogeneous = lmt.triangulate_and_LM(P1, P2, src, dst)
 
 # ---- 2D canvas ----
 fig2d, ax2d = plt.subplots()
@@ -178,9 +180,9 @@ rd.render_point2D(ax2d, v_left, color = (0, 255, 0))
 
 
 # ---- 3D canvas ----
-# fig3d = plt.figure()
-# ax3d = fig3d.add_subplot(111, projection='3d')
-# ax3d.set_title("3D Canvas")
+fig3d = plt.figure()
+ax3d = fig3d.add_subplot(111, projection='3d')
+ax3d.set_title("3D Canvas")
 
 
 plt.show()
