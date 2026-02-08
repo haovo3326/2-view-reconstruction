@@ -138,9 +138,22 @@ lines_left = [l_37_39, l_40_42,
               l_43_45, l_46_48]
 v_left = vp.VP_LM(lines_left)
 
-omega_mat = [ut.omega_constraints(v_right, v_left),
-             ut.omega_constraints(v_left, v_up),
-             ut.omega_constraints(v_up, v_right)]
+l_25_22 = ut.line(src[24], src[21]).flatten().tolist()
+l_27_24 = ut.line(src[26], src[23]).flatten().tolist()
+l_35_32 = ut.line(src[34], src[31]).flatten().tolist()
+lines_right_up = [l_25_22, l_27_24, l_35_32]
+v_right_up = vp.VP_LM(lines_right_up)
+
+l_23_28 = ut.line(src[22], src[27]).flatten().tolist()
+l_31_36 = ut.line(src[30], src[35]).flatten().tolist()
+l_29_34 = ut.line(src[28], src[33]).flatten().tolist()
+lines_right_down = [l_23_28, l_31_36, l_29_34]
+v_right_down = vp.VP_LM(lines_right_down)
+
+
+omega_mat = [ut.omega_vp_vp_constraints(v_right, v_left),
+             ut.omega_vp_vp_constraints(v_left, v_up),
+             ut.omega_vp_vp_constraints(v_up, v_right)]
 _, _, Vt = np.linalg.svd(omega_mat)
 theta = Vt[-1]
 theta = theta / theta[-1]
@@ -163,22 +176,30 @@ X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12 = X_3D_homogeneous
 fig2d, ax2d = plt.subplots()
 ax2d.set_title("2D Canvas")
 ax2d.set_xlim(-0, 10000)
-ax2d.set_ylim(5000, -8000)
+ax2d.set_ylim(10000, -8000)
 rd.render_image(ax2d, "Sample/Image 1.JPG")
 
 i1 = [12, 16, 20, 24, 28, 32] # right
 i2 = [32, 33, 34, 35, 45, 46, 47] # up
 i3 = [47, 44, 41, 38] # left
+i4 = [24, 26, 34]
+i5 = [22, 28, 30]
 for i in i1:
     rd.render_line2D(ax2d, v_right, src[i], color = (255, 0, 0))
 for i in i2:
     rd.render_line2D(ax2d, v_up, src[i], color = (255, 0, 0))
 for i in i3:
     rd.render_line2D(ax2d, v_left, src[i], color = (255, 0, 0))
+for i in i4:
+    rd.render_line2D(ax2d, v_right_up, src[i])
+for i in i5:
+    rd.render_line2D(ax2d, v_right_down, src[i])
 
 rd.render_point2D(ax2d, v_up, color = (0, 255, 0))
 rd.render_point2D(ax2d, v_right, color = (0, 255, 0))
 rd.render_point2D(ax2d, v_left, color = (0, 255, 0))
+rd.render_point2D(ax2d, v_right_up, color = (0, 255, 0))
+rd.render_point2D(ax2d, v_right_down, color = (0, 255, 0))
 
 # Projection
 for X in X_3D_homogeneous:
