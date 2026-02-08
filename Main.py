@@ -101,6 +101,7 @@ fundamental_mat = np.array(fundamental_mat, dtype=float)
 _, _, Vt = np.linalg.svd(fundamental_mat)
 f = Vt[-1]
 F = f.reshape(3, 3)
+F = ut.enforce_rank2(F)
 
 # --- Calculate IAC (Image of Absolute Conic) ---
 l_13_33 = ut.line(src[12], src[32]).flatten().tolist()
@@ -153,6 +154,7 @@ K = np.array([
     [0, 0, 1]
 ])
 E = K.T @ F @ K
+E = ut.enforce_rank2(E)
 P1, P2 = ch.test(E, K, src, dst)
 P2, X_3D_homogeneous = lmt.triangulate_and_LM(P1, P2, src, dst)
 X1, X2, X3, X4, X5, X6, X7, X8, X9, X10, X11, X12 = X_3D_homogeneous

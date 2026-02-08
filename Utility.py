@@ -9,6 +9,12 @@ def line(p1: np.ndarray, p2: np.ndarray):
     l = np.cross(p1.flatten(), p2.flatten()).reshape(3, 1)
     return l
 
+def enforce_rank2(m: np.ndarray):
+    assert m.shape == (3, 3)
+    U, S, Vt = np.linalg.svd(m)
+    S[-1] = 0
+    return U @ S @ Vt
+
 def omega_constraints(v1: np.ndarray, v2: np.ndarray):
     x1, y1, _ = v1.flatten()
     x2, y2, _ = v2.flatten()
