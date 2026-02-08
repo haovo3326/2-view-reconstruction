@@ -150,7 +150,7 @@ l_29_34 = ut.line(src[28], src[33]).flatten().tolist()
 lines_right_down = [l_23_28, l_31_36, l_29_34]
 v_right_down = vp.VP_LM(lines_right_down)
 
-
+# Assuming K has zero skew and square pixels
 omega_mat = [ut.omega_vp_vp_constraints(v_right, v_left),
              ut.omega_vp_vp_constraints(v_left, v_up),
              ut.omega_vp_vp_constraints(v_up, v_right)]

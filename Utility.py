@@ -9,6 +9,12 @@ def line(p1: np.ndarray, p2: np.ndarray):
     l = np.cross(p1.flatten(), p2.flatten()).reshape(3, 1)
     return l
 
+def line_best_fit(points: list):
+    A = np.vstack([p.flatten() for p in points])  # N x 3
+    _, _, Vt = np.linalg.svd(A)
+    l = Vt[-1].reshape(3, 1)  # 3 x 1
+    return l
+
 def enforce_rank2(m: np.ndarray):
     assert m.shape == (3, 3)
     U, S, Vt = np.linalg.svd(m)
